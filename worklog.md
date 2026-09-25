@@ -34,3 +34,22 @@ Stage Summary:
 - DB: prisma/schema.prisma (SQLite, db file in /home/z/my-project/db)
 - SINGLE-ROUTE RULE: everything under src/app/page.tsx with client-side view routing (no other routes allowed by platform)
 - NEXT STEPS: Task 1 schema+auth, Task 2 core CRUD APIs, Task 3 UI shells+dashboards, Task 4 live class socket service, Task 5 finance module, Task 6 polish+verify, Task 7 GitHub push
+
+---
+Task ID: 1-7 (all implementation)
+Agent: main (Super Z)
+Task: Build complete educational institute platform (schema, APIs, live service, UI, seed)
+
+Work Log:
+- Pushed 23-model Prisma schema (SQLite); fixed relation issues (UserBranch, BranchManager unique, Certificate student relation)
+- Built custom auth: scrypt hashing + HMAC-signed httpOnly cookie, /api/auth/{register,login,logout,me}
+- Built 30+ REST endpoints: users, branches, rooms, courses, classes (auto session generation), sessions, attendance, recordings, enrollments (auto installments), payments, installments (auto-overdue), expenses, payroll (auto-calc hours×rate), finance/summary, assignments, submissions, quizzes, quiz-attempts (auto-grade), certificates (+public verify), announcements, notifications, tickets, live-messages, dashboard (role-aware), settings, audit, landing
+- Live service (mini-services/live-service, port 3003): rooms per session, chat broadcast + persistence, participants, hand-raise, synced whiteboard with stroke replay, teacher live-status
+- Frontend: Persian RTL (Vazirmatn), landing page with live stats, auth with 5 demo quick-logins, role-based dashboard shell, admin (overview/users/structure/classes/enrollments/finance/comms/settings), teacher (overview/classes/sessions+attendance/assignments+quizzes/recordings/live/salary), student (overview/courses/schedule/live/assignments+quizzes/payments/certificates/support), live classroom overlay
+- Seed: 2 branches, 4 rooms, 5 courses, 5 classes, 61 sessions + 1 LIVE, 8 students, 3 teachers, 11 enrollments, 16 payments (balanced books: income 83.6M, expense 69.8M, profit +13.8M, debt 20M), 4 installments (2 overdue), expenses, 5 payrolls, attendance, recordings, assignment+submissions, quiz+attempt, announcements, ticket, live chat history
+
+Stage Summary:
+- Fixes during browser verification: ui-bits.tsx recreated, ListQuiz→FileQuestion alias, TabsContent/Button imports, chat Invalid Date (createdAt→at mapping), dashboard API missing course select, Question orderBy createdAt→id, Certificate student relation added, prisma query logging off, zustand persist for view/activeMenu, whiteboard stroke replay on board open
+- VERIFIED via agent-browser (dual sessions through Caddy :81): login flows (all roles), admin KPIs/charts/finance, class detail+sessions+attendance UI, student dashboard, live classroom: SOCKET CONNECTED via XTransformPort=3003, cross-user chat sync (student→teacher), participants (2), hand-raise, whiteboard stroke sync, quiz auto-grade API, payment create, certificate auto-issue + public verify (valid/fake)
+- Lint: 0 errors. GitHub: pushed to https://github.com/nexuzrnhhgffy/academy-platform (main)
+- Demo accounts: admin/manager/teacher/student/staff @academy.ir / 123456
